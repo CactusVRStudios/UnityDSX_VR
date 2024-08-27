@@ -1,10 +1,12 @@
 # UnityDSX_VR
 Use Adaptive Triggers in Unity with Windows and DSX 3.1+
 Note: This is a POC and intended for developers!
+
 Requires DSX Version 3.1+
 
 ## How does it work?
 The little script sends UDP commands to DSX which will execute the commands on the controller. In order for it to work, you need to have the DSX 3.1 or higher installed and running. Make sure your UDP Ports are open. See DSX settings for further assistance. 
+
 Best practice is, to start SteamVR before starting DSX.
 
 
