@@ -98,7 +98,7 @@ Yes!
 
 No, unless you have the source code for it or are able to mod the game!
 
-*Is there a game I can test it?**
+**Is there a game I can test it?**
 
 Yes! [Cactus Cowboy - Desert Warfare](https://store.steampowered.com/app/2554800/Cactus_Cowboy__Desert_Warfare/) on steam has a beta with a working implementation. Go to the Beta tab, and pick the "PSVR2_Special_Ed". Make sure DSX3.1+ is installed and running.
 
