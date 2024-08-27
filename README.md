@@ -83,18 +83,26 @@ These commands provide a robust interface for controlling the trigger states of 
 
 ## FAQ
 **Does this work without DSX?** 
+
 No!
 
+
 **Will it ever work without DSX?**
+
 Yes!
 
+
 **I just wanna play. Can I use it to make it work with HL:A $_RandomGame**
+
 No, unless you have the source code for it or are able to mod the game!
+
 
 **Can you access the Adaptive Triggers with Unity natively?**
 Yes, but that is more complex.
 
+
 **Is a native SDK being worked on?**
+
 Preparations have been made 😎
 
 
