@@ -115,4 +115,4 @@ Preparations have been made 😎
 A native Unity implementation for Windows is certainly possible as DSX has proven it. So why this? This can be used as concept for other VR mods, games with no access to its source code, UEVR or direct implementation.
 
 
-Cactus VR Studios
+2024 - Cactus VR Studios
