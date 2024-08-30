@@ -9,7 +9,7 @@ Use PSVR2 Adaptive Triggers in Unity with Windows and DSX 3.1+
 
 Note: This is a POC and intended for developers!
 
-Code/Unitypackage will be published here shortly!
+
 
 Requires DSX Version 3.1+
 
