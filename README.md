@@ -105,12 +105,19 @@ Yes! [Cactus Cowboy - Desert Warfare](https://store.steampowered.com/app/2554800
 
 
 **Can you access the Adaptive Triggers with Unity natively?**
+
 Yes, but that is more complex.
+
+
+**What about HMD rumble?**
+
+Not working, yet!
 
 
 **Is a native SDK being worked on?**
 
 Preparations have been made 😎
+
 
 
 
