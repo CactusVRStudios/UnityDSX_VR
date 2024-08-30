@@ -82,8 +82,8 @@ namespace Shared
         WEAPON = 22,
         VIBRATION = 23,
         SLOPE_FEEDBACK = 24,
-        MULIPLE_POSITION_FEEDBACK = 25,
-        MULIPLE_POSITION_VIBRATION = 26,
+        MULTIPLE_POSITION_FEEDBACK = 25,
+        MULTIPLE_POSITION_VIBRATION = 26,
     }
 
     public enum CustomTriggerValueMode
