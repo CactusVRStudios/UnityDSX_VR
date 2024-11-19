@@ -193,6 +193,32 @@ public class PSVR2TriggerController : MonoBehaviour
         }
        
     }
+    public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, int start, int end, int startStrength, int endStrength)
+    {
+        //SlopeFeedback
+        if (triggerToDeviceIndex.TryGetValue(trigger, out int controllerIndex))
+        {
+            try
+            {
+                Packet p = new Packet();
+                p.instructions = new Instruction[1];
+                p.instructions[0].type = InstructionType.TriggerUpdate;
+                p.instructions[0].parameters = new object[] { controllerIndex, trigger, triggerMode, start, end, startStrength, endStrength };
+                Send(p);
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e);
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"No device found for trigger {trigger}");
+        }
+
+    }
+
+
     public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, CustomTriggerValueMode valueMode,int force1, int force2, int force3, int force4 ,int force5, int force6, int force7)
     {
         if (triggerToDeviceIndex.TryGetValue(trigger, out int controllerIndex))
