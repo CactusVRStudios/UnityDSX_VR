@@ -14,7 +14,7 @@ public class PSVR2TriggerController : MonoBehaviour
     static UdpClient client;
     static IPEndPoint endPoint;
     public static PSVR2TriggerController Instance;
-    public bool SetNormalAfterDestroy= true;
+    public bool SetNormalAfterDestroy = true;
 
     private DateTime TimeSent;
     private List<Device> devices = new List<Device>();
@@ -96,7 +96,7 @@ public class PSVR2TriggerController : MonoBehaviour
     }
 
 
-    public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, int start,int strenght,int frequency)
+    public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, int start, int strenght, int frequency)
     {
         //AutomaticGun
         if (triggerToDeviceIndex.TryGetValue(trigger, out int controllerIndex))
@@ -119,9 +119,9 @@ public class PSVR2TriggerController : MonoBehaviour
             Debug.LogWarning($"No device found for trigger {trigger}");
         }
 
-        
+
     }
-    public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, int start, int end, int StrenghtA,int StrenghtB,int frequency,int period)
+    public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, int start, int end, int StrenghtA, int StrenghtB, int frequency, int period)
     {
         //Machine
         if (triggerToDeviceIndex.TryGetValue(trigger, out int controllerIndex))
@@ -143,7 +143,7 @@ public class PSVR2TriggerController : MonoBehaviour
         {
             Debug.LogWarning($"No device found for trigger {trigger}");
         }
-        
+
     }
     public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, int start, int end, int firstFoot, int secondFoot, int frequency)
     {
@@ -167,7 +167,7 @@ public class PSVR2TriggerController : MonoBehaviour
         {
             Debug.LogWarning($"No device found for trigger {trigger}");
         }
-        
+
     }
     public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, int start, int force)
     {
@@ -191,7 +191,7 @@ public class PSVR2TriggerController : MonoBehaviour
         {
             Debug.LogWarning($"No device found for trigger {trigger}");
         }
-       
+
     }
     public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, int start, int end, int startStrength, int endStrength)
     {
@@ -219,7 +219,7 @@ public class PSVR2TriggerController : MonoBehaviour
     }
 
 
-    public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, CustomTriggerValueMode valueMode,int force1, int force2, int force3, int force4 ,int force5, int force6, int force7)
+    public void SetTriggerState(Trigger trigger, TriggerMode triggerMode, CustomTriggerValueMode valueMode, int force1, int force2, int force3, int force4, int force5, int force6, int force7)
     {
         if (triggerToDeviceIndex.TryGetValue(trigger, out int controllerIndex))
         {
@@ -241,12 +241,12 @@ public class PSVR2TriggerController : MonoBehaviour
             Debug.LogWarning($"No device found for trigger {trigger}");
         }
         //CustomTrigger
-        
+
     }
 
 
     //SetTriggerThreshold
-    public void SetThreshold(Trigger trigger,int strenght)
+    public void SetThreshold(Trigger trigger, int strenght)
     {
         if (triggerToDeviceIndex.TryGetValue(trigger, out int controllerIndex))
         {
@@ -260,7 +260,7 @@ public class PSVR2TriggerController : MonoBehaviour
         {
             Debug.LogWarning($"No device found for trigger {trigger}");
         }
-        
+
     }
     void Connect()
     {
@@ -271,8 +271,7 @@ public class PSVR2TriggerController : MonoBehaviour
             client = new UdpClient();
             Debug.Log("UdpClient initialized.");
 
-            var portNumber = File.ReadAllText(@"C:\Temp\DualSenseX\DualSenseX_PortNumber.txt");
-            Debug.Log($"Port number read from file: {portNumber}");
+            var portNumber = FetchPortNumber();
 
             endPoint = new IPEndPoint(Triggers.localhost, Convert.ToInt32(portNumber));
             Debug.Log($"EndPoint created: {endPoint.Address}:{endPoint.Port}");
@@ -320,7 +319,7 @@ public class PSVR2TriggerController : MonoBehaviour
                 Debug.Log($"isControllerConnected   - {ServerResponseJson.isControllerConnected}");
                 Debug.Log($"BatteryLevel            - {ServerResponseJson.BatteryLevel}\n");
 
-                
+
                 devices.Clear();
                 foreach (Device device in ServerResponseJson.Devices)
                 {
@@ -377,8 +376,8 @@ public class PSVR2TriggerController : MonoBehaviour
         var RequestData = Encoding.ASCII.GetBytes(Triggers.PacketToJson(data));
         client.Send(RequestData, RequestData.Length, endPoint);
     }
-   
-   
+
+
     void OnDestroy()
     {
         if (SetNormalAfterDestroy)
@@ -386,5 +385,50 @@ public class PSVR2TriggerController : MonoBehaviour
             SetTriggerState(Trigger.Left, TriggerMode.Normal);
             SetTriggerState(Trigger.Right, TriggerMode.Normal);
         }
+    }
+
+    int FetchPortNumber()
+    {
+        // ONLY WORKS WITH DSX v3.1 BETA 1.37 AND ABOVE
+        const int defaultPort = 6969;
+        const string appFolderName = "DSX";
+        const string fileName = "DSX_UDP_PortNumber.txt";
+        try
+        {
+            Console.WriteLine("Fetching Port Number locally...");
+            // Get the Local AppData path for the application
+            string localAppDataPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                appFolderName
+            );
+            string portFilePath = Path.Combine(localAppDataPath, fileName);
+            // Check if the file exists
+            if (File.Exists(portFilePath))
+            {
+                Console.WriteLine($"Port file found at: {portFilePath}");
+                // Try to read and parse the port number
+                string portNumberContent = File.ReadAllText(portFilePath).Trim();
+                if (int.TryParse(portNumberContent, out int portNumber))
+                {
+                    Console.WriteLine($"Port Number successfully read: {portNumber}");
+                    return portNumber;
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid port number format in file: {portNumberContent}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Port file not found at: {portFilePath}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while fetching the port number: {ex.Message}");
+        }
+        // Fallback to default port number
+        Console.WriteLine($"Falling back to default port number: {defaultPort}");
+        return defaultPort;
     }
 }
